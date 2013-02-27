@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js canvas - geometry - birds</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	</head>
+	<body>
+		<div id="container"></div>
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="../three.js/build/three.min.js"></script>
+		<script>
+			var scene_attributes = {
+				width: 400,
+				height: 300
+			};
+			
+			var camera_attributes = {
+				angle: 45,
+				aspect: scene_attributes.width / scene_attributes.height,
+				near: 0.1,
+				far: 10000
+			};
+			
+			var $container = $('#container');
+			var renderer = new THREE.WebGLRenderer();
+			var camera = new THREE.PerspectiveCamera(
+				camera_attributes.angle,
+				camera_attributes.aspect,
+				camera_attributes.near,
+				camera_attributes.far
+			);
+			
+			var scene = new THREE.Scene();
+			scene.add(camera);
+			camera.position.z = 300;
+			renderer.setSize(scene_attributes.width, scene_attributes.height);
+			$container.append(renderer.domElement);
+			
+			var sphere_attributes = {
+				radius: 50,
+				segments: 16,
+				rings: 16,
+			};
+			
+			var sphereMaterial = new THREE.MeshLambertMaterial({
+				color: 0x0000CC
+			});
+			
+			var sphere = new THREE.Mesh(
+				new THREE.SphereGeometry(
+					sphere_attributes.radius,
+					sphere_attributes.segments,
+					sphere_attributes.rings
+				),
+				sphere_attributes.material
+			);
+			
+			var pointLight = new THREE.PointLight(0xFFFFFF);
+			pointLight.position.x = 10;
+			pointLight.position.y = 50;
+			pointLight.position.x = 130;
+			
+			scene.add(pointLight);
+			scene.add(sphere);
+			
+			renderer.render(scene, camera);
+		</script>
+
+	</body>
+</html>
